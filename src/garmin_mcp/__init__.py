@@ -436,7 +436,20 @@ def main():
         )
 
     # Run the MCP server
-    app.run(transport=transport)
+    if transport == "streamable-http":
+        import uvicorn
+        from starlette.middleware.cors import CORSMiddleware
+
+        http_app = fastmcp.streamable_http_app()
+        http_app = CORSMiddleware(
+            http_app,
+            allow_origins=["*"],
+            allow_methods=["GET", "POST", "OPTIONS", "DELETE"],
+            allow_headers=["*"],
+        )
+        uvicorn.run(http_app, host=http_host, port=http_port)
+    else:
+        app.run(transport=transport)
 
 
 if __name__ == "__main__":
