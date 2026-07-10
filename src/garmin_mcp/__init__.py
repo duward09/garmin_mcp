@@ -441,11 +441,13 @@ def main():
         from starlette.middleware.cors import CORSMiddleware
 
         http_app = fastmcp.streamable_http_app()
-        http_app = CORSMiddleware(
-            http_app,
-            allow_origins=["*"],
-            allow_methods=["GET", "POST", "OPTIONS", "DELETE"],
-            allow_headers=["*"],
+       http_app = CORSMiddleware(
+    http_app,
+    allow_origins=["*"],
+    allow_methods=["GET", "POST", "OPTIONS", "DELETE"],
+    allow_headers=["*"],
+    expose_headers=["Mcp-Session-Id"],
+)
         )
         uvicorn.run(http_app, host=http_host, port=http_port)
     else:
