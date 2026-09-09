@@ -7,7 +7,7 @@ import sys
 import base64
 
 import requests
-from mcp.server.mcpserver import MCPServer
+from mcp.server.fastmcp import FastMCP
 
 from garminconnect import Garmin, GarminConnectAuthenticationError, GarminConnectConnectionError, GarminConnectTooManyRequestsError
 
@@ -385,7 +385,7 @@ def main():
 
     # Create the MCP app, wrapped so the env-var filter can drop tools.
     # host/port only matter for the HTTP transports; stdio ignores them.
-    fastmcp = MCPServer("Garmin Connect v1.0", host=http_host, port=http_port)
+    fastmcp = FastMCP("Garmin Connect v1.0", host=http_host, port=http_port)
     app = _ToolFilter(fastmcp, enabled_tools, disabled_tools)
     if enabled_tools:
         print(f"Tool filter: allowlist of {len(enabled_tools)} tool(s).", file=sys.stderr)
