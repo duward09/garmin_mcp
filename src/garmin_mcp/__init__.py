@@ -7,7 +7,10 @@ import sys
 import base64
 
 import requests
-from mcp.server.mcpserver import MCPServer
+try:
+    from mcp.server.mcpserver import MCPServer
+except ModuleNotFoundError:
+    from mcp.server.fastmcp import FastMCP as MCPServer
 
 from garminconnect import Garmin, GarminConnectAuthenticationError, GarminConnectConnectionError, GarminConnectTooManyRequestsError
 
